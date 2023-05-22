@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>656</width>
+    <height>414</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Gpx on map</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="lbCoord">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>348</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>B:0 L:0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbScale">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>348</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0 m/pix</string>
+    </property>
+   </widget>
+   <widget class="QMdiArea" name="mdiArea">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>50</y>
+      <width>331</width>
+      <height>251</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>656</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpenMap"/>
+    <addaction name="separator"/>
+    <addaction name="actionCreateGpx"/>
+    <addaction name="actionOpenGpx"/>
+    <addaction name="actionSaveGpx"/>
+    <addaction name="actionSaveGpxAs"/>
+    <addaction name="actionCloseGpx"/>
+    <addaction name="separator"/>
+    <addaction name="actionImport"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionTileBoundaries"/>
+    <addaction name="separator"/>
+    <addaction name="actionHideTrackColumns"/>
+    <addaction name="actionHideWptColumns"/>
+    <addaction name="separator"/>
+    <addaction name="actionDefaultGpxColWidth"/>
+    <addaction name="actionDefaultTrkColWidth"/>
+    <addaction name="actionDefaultWptColWidth"/>
+    <addaction name="separator"/>
+    <addaction name="actionLocalTimeGpx"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <widget class="QMenu" name="menuArrDepTime">
+     <property name="title">
+      <string>Arrival and departure time</string>
+     </property>
+     <addaction name="actionArrTime"/>
+     <addaction name="actionDepTime"/>
+    </widget>
+    <addaction name="actionTrackProp"/>
+    <addaction name="actionMergeTracks"/>
+    <addaction name="actionCutTrack"/>
+    <addaction name="actionRemoveEqPoints"/>
+    <addaction name="actionRemoveAzPoints"/>
+    <addaction name="separator"/>
+    <addaction name="actionAddOnClick"/>
+    <addaction name="actionInsertOnClick"/>
+    <addaction name="actionMoveTrackPoint"/>
+    <addaction name="actionEditTrackPoint"/>
+    <addaction name="actionDeleteTrackPoints"/>
+    <addaction name="actionDeletePointsAbove"/>
+    <addaction name="actionDeletePointsBelow"/>
+    <addaction name="actionAverageCoordinates"/>
+    <addaction name="actionCalculateTime"/>
+    <addaction name="actionEquateCoordToPrec"/>
+    <addaction name="actionEquateCoordToNext"/>
+    <addaction name="separator"/>
+    <addaction name="actionAddWayPoint"/>
+    <addaction name="actionEditWayPoint"/>
+    <addaction name="actionSortWayPoints"/>
+    <addaction name="actionAlignWptTpt"/>
+    <addaction name="menuArrDepTime"/>
+    <addaction name="actionDeleteWaypoints"/>
+   </widget>
+   <widget class="QMenu" name="menuCoordinate_system">
+    <property name="title">
+     <string>Coordinate system</string>
+    </property>
+    <addaction name="actionPixels"/>
+    <addaction name="actionMeters"/>
+    <addaction name="actionDeg"/>
+    <addaction name="actionDegMin"/>
+    <addaction name="actionDegMinSec"/>
+    <addaction name="actionRad"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionHelp"/>
+    <addaction name="actionAbout"/>
+    <addaction name="actionAboutQt"/>
+    <addaction name="actionTest"/>
+   </widget>
+   <widget class="QMenu" name="menuWindows">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="actionCloseMap"/>
+    <addaction name="actionCloseAllMap"/>
+    <addaction name="separator"/>
+    <addaction name="actionTileMap"/>
+    <addaction name="actionCascadeMap"/>
+    <addaction name="separator"/>
+    <addaction name="actionNextMap"/>
+    <addaction name="actionPrevMap"/>
+    <addaction name="separator"/>
+    <addaction name="actionTabbedMap"/>
+   </widget>
+   <widget class="QMenu" name="menuMoving">
+    <property name="title">
+     <string>Moving</string>
+    </property>
+    <addaction name="actionMoveGpxUp"/>
+    <addaction name="actionMoveGpxDown"/>
+    <addaction name="separator"/>
+    <addaction name="actionFirstTrackPoint"/>
+    <addaction name="actionPreviosTrackPoint"/>
+    <addaction name="actionNextTrackPoint"/>
+    <addaction name="actionLastTrackPoint"/>
+    <addaction name="actionMoveByNTreckPoints"/>
+    <addaction name="actionToNextStop"/>
+    <addaction name="separator"/>
+    <addaction name="actionToPointWithAltMin"/>
+    <addaction name="actionToPointWithAltMax"/>
+    <addaction name="actionToPointWithSpeedMax"/>
+    <addaction name="separator"/>
+    <addaction name="actionPrevWaypoint"/>
+    <addaction name="actionNextWaypoint"/>
+    <addaction name="actionToPrevWaypoint"/>
+    <addaction name="actionToNextWaypoint"/>
+    <addaction name="separator"/>
+    <addaction name="actionMoveToPoint"/>
+    <addaction name="actionMoveToCurrentTrackPoint"/>
+    <addaction name="actionMoveToCurrentWaypoint"/>
+   </widget>
+   <widget class="QMenu" name="menuTileSource">
+    <property name="title">
+     <string>Tile source</string>
+    </property>
+    <addaction name="actionNetwork"/>
+    <addaction name="actionCache"/>
+    <addaction name="actionCacheNetwork"/>
+   </widget>
+   <widget class="QMenu" name="menuTasks">
+    <property name="title">
+     <string>Tasks</string>
+    </property>
+    <addaction name="actionMovementIndicators"/>
+    <addaction name="actionMapProperty"/>
+    <addaction name="actionTrackProperty"/>
+    <addaction name="separator"/>
+    <addaction name="actionTripReport"/>
+    <addaction name="actionTownWeather"/>
+   </widget>
+   <widget class="QMenu" name="menuMeasure">
+    <property name="title">
+     <string>Measure</string>
+    </property>
+    <addaction name="actionMeasure"/>
+    <addaction name="actionClearMeasure"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuView"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuCoordinate_system"/>
+   <addaction name="menuMoving"/>
+   <addaction name="menuMeasure"/>
+   <addaction name="menuTasks"/>
+   <addaction name="menuTileSource"/>
+   <addaction name="menuWindows"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QDockWidget" name="dockWidget">
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents"/>
+  </widget>
+  <action name="actionPixels">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Pixels</string>
+   </property>
+  </action>
+  <action name="actionMeters">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Meters</string>
+   </property>
+  </action>
+  <action name="actionDeg">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Degrees</string>
+   </property>
+  </action>
+  <action name="actionDegMin">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Degrees, minutes</string>
+   </property>
+  </action>
+  <action name="actionDegMinSec">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Degrees, minutes, seconds</string>
+   </property>
+  </action>
+  <action name="actionRad">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Radians</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>Help</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionAboutQt">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/qt.png</normaloff>:/resources/qt.png</iconset>
+   </property>
+   <property name="text">
+    <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionOpenMap">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/openmap.png</normaloff>:/resources/openmap.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open map</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/settings.png</normaloff>:/resources/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/off.png</normaloff>:/resources/off.png</iconset>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionOpenGpx">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/opengpx.png</normaloff>:/resources/opengpx.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open gpx</string>
+   </property>
+  </action>
+  <action name="actionSaveGpx">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/save.png</normaloff>:/resources/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save gpx</string>
+   </property>
+  </action>
+  <action name="actionSaveGpxAs">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/saveas.png</normaloff>:/resources/saveas.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save gpx as...</string>
+   </property>
+  </action>
+  <action name="actionCloseMap">
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </action>
+  <action name="actionCloseAllMap">
+   <property name="text">
+    <string>Close all</string>
+   </property>
+  </action>
+  <action name="actionTileMap">
+   <property name="text">
+    <string>Tile</string>
+   </property>
+  </action>
+  <action name="actionCascadeMap">
+   <property name="text">
+    <string>Cascade</string>
+   </property>
+  </action>
+  <action name="actionNextMap">
+   <property name="text">
+    <string>Next</string>
+   </property>
+  </action>
+  <action name="actionPrevMap">
+   <property name="text">
+    <string>Previouse</string>
+   </property>
+  </action>
+  <action name="actionTabbedMap">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Tabbed</string>
+   </property>
+  </action>
+  <action name="actionMoveToPoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/gotopnt.png</normaloff>:/resources/gotopnt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move to point</string>
+   </property>
+  </action>
+  <action name="actionTrackProp">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/trackprop.png</normaloff>:/resources/trackprop.png</iconset>
+   </property>
+   <property name="text">
+    <string>Track property</string>
+   </property>
+  </action>
+  <action name="actionMergeTracks">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/merge.png</normaloff>:/resources/merge.png</iconset>
+   </property>
+   <property name="text">
+    <string>Merge tracks</string>
+   </property>
+  </action>
+  <action name="actionCutTrack">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/cut.png</normaloff>:/resources/cut.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cat track</string>
+   </property>
+  </action>
+  <action name="actionRemoveEqPoints">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/deleqpnt.png</normaloff>:/resources/deleqpnt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete points with equalent coordinates</string>
+   </property>
+  </action>
+  <action name="actionRemoveAzPoints">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/delazpnt.png</normaloff>:/resources/delazpnt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Remove points that slightly deviate from the path</string>
+   </property>
+  </action>
+  <action name="actionAddOnClick">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/pappend.png</normaloff>:/resources/pappend.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add point by clicking on map</string>
+   </property>
+  </action>
+  <action name="actionInsertOnClick">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/pinsert.png</normaloff>:/resources/pinsert.png</iconset>
+   </property>
+   <property name="text">
+    <string>Insert point by clicking on map</string>
+   </property>
+  </action>
+  <action name="actionMoveTrackPoint">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/movepnt.png</normaloff>:/resources/movepnt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Movement track point</string>
+   </property>
+  </action>
+  <action name="actionEditTrackPoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/pedit.png</normaloff>:/resources/pedit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Edit track point</string>
+   </property>
+  </action>
+  <action name="actionDeleteTrackPoints">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/pdel.png</normaloff>:/resources/pdel.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete track points</string>
+   </property>
+  </action>
+  <action name="actionDeletePointsAbove">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/pdelup.png</normaloff>:/resources/pdelup.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete all points above current</string>
+   </property>
+  </action>
+  <action name="actionDeletePointsBelow">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/pdeldown.png</normaloff>:/resources/pdeldown.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete all points below current</string>
+   </property>
+  </action>
+  <action name="actionAverageCoordinates">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/averaging.png</normaloff>:/resources/averaging.png</iconset>
+   </property>
+   <property name="text">
+    <string>Average coordinates selected points</string>
+   </property>
+  </action>
+  <action name="actionCalculateTime">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/calctinpnt.png</normaloff>:/resources/calctinpnt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Calculate  time at intermediate points</string>
+   </property>
+  </action>
+  <action name="actionEditWayPoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/wptedit.png</normaloff>:/resources/wptedit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Edit waypoint</string>
+   </property>
+  </action>
+  <action name="actionCache">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Cache</string>
+   </property>
+  </action>
+  <action name="actionNetwork">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Internet</string>
+   </property>
+  </action>
+  <action name="actionCacheNetwork">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Cache and Internet</string>
+   </property>
+  </action>
+  <action name="actionMoveGpxUp">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/moveup.png</normaloff>:/resources/moveup.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move gpx up</string>
+   </property>
+  </action>
+  <action name="actionMoveGpxDown">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/movedown.png</normaloff>:/resources/movedown.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move gpx down</string>
+   </property>
+  </action>
+  <action name="actionFirstTrackPoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/gofirst.png</normaloff>:/resources/gofirst.png</iconset>
+   </property>
+   <property name="text">
+    <string>First track point</string>
+   </property>
+  </action>
+  <action name="actionPreviosTrackPoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/goprev.png</normaloff>:/resources/goprev.png</iconset>
+   </property>
+   <property name="text">
+    <string>Previos track point</string>
+   </property>
+  </action>
+  <action name="actionNextTrackPoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/gonext.png</normaloff>:/resources/gonext.png</iconset>
+   </property>
+   <property name="text">
+    <string>Next track point</string>
+   </property>
+  </action>
+  <action name="actionLastTrackPoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/golast.png</normaloff>:/resources/golast.png</iconset>
+   </property>
+   <property name="text">
+    <string>Last track point</string>
+   </property>
+  </action>
+  <action name="actionMoveByNTreckPoints">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/go_n.png</normaloff>:/resources/go_n.png</iconset>
+   </property>
+   <property name="text">
+    <string>Мove by n track points</string>
+   </property>
+  </action>
+  <action name="actionToNextStop">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/gostop.png</normaloff>:/resources/gostop.png</iconset>
+   </property>
+   <property name="text">
+    <string>To the next stop</string>
+   </property>
+  </action>
+  <action name="actionToPointWithAltMin">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/gominh.png</normaloff>:/resources/gominh.png</iconset>
+   </property>
+   <property name="text">
+    <string>To track point with minimum height</string>
+   </property>
+  </action>
+  <action name="actionToPointWithAltMax">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/gomaxh.png</normaloff>:/resources/gomaxh.png</iconset>
+   </property>
+   <property name="text">
+    <string>To track point with maximum height</string>
+   </property>
+  </action>
+  <action name="actionToPointWithSpeedMax">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/govmax.png</normaloff>:/resources/govmax.png</iconset>
+   </property>
+   <property name="text">
+    <string>To track point with maximum speed</string>
+   </property>
+  </action>
+  <action name="actionToNextWaypoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/tonextwpt.png</normaloff>:/resources/tonextwpt.png</iconset>
+   </property>
+   <property name="text">
+    <string>To next waypoint</string>
+   </property>
+  </action>
+  <action name="actionToPrevWaypoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/toprevwpt.png</normaloff>:/resources/toprevwpt.png</iconset>
+   </property>
+   <property name="text">
+    <string>To previous waypoint</string>
+   </property>
+  </action>
+  <action name="actionMoveToCurrentTrackPoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/gototrkpnt.png</normaloff>:/resources/gototrkpnt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move to current track point</string>
+   </property>
+  </action>
+  <action name="actionMoveToCurrentWaypoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/gotowpt.png</normaloff>:/resources/gotowpt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move to current way point</string>
+   </property>
+  </action>
+  <action name="actionMovementIndicators">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/topnt.png</normaloff>:/resources/topnt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Movement indicators before and after the point</string>
+   </property>
+  </action>
+  <action name="actionMapProperty">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/mapprop.png</normaloff>:/resources/mapprop.png</iconset>
+   </property>
+   <property name="text">
+    <string>Map property</string>
+   </property>
+  </action>
+  <action name="actionTrackProperty">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/trackprop.png</normaloff>:/resources/trackprop.png</iconset>
+   </property>
+   <property name="text">
+    <string>Track property</string>
+   </property>
+  </action>
+  <action name="actionAddWayPoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/wptappend.png</normaloff>:/resources/wptappend.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add waypoint</string>
+   </property>
+  </action>
+  <action name="actionSortWayPoints">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/wptsort.png</normaloff>:/resources/wptsort.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sort waypoints</string>
+   </property>
+  </action>
+  <action name="actionDeleteWaypoints">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/wptdel.png</normaloff>:/resources/wptdel.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete waypoints</string>
+   </property>
+  </action>
+  <action name="actionEquateCoordToPrec">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/equate_p.png</normaloff>:/resources/equate_p.png</iconset>
+   </property>
+   <property name="text">
+    <string>Equate coordinates of points to the previous one</string>
+   </property>
+  </action>
+  <action name="actionEquateCoordToNext">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/equate_a.png</normaloff>:/resources/equate_a.png</iconset>
+   </property>
+   <property name="text">
+    <string>Equate coordinates of points to the next one</string>
+   </property>
+  </action>
+  <action name="actionTest">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/sgn/resources/sflagg.png</normaloff>:/sgn/resources/sflagg.png</iconset>
+   </property>
+   <property name="text">
+    <string>test</string>
+   </property>
+  </action>
+  <action name="actionCloseGpx">
+   <property name="text">
+    <string>Close gpx</string>
+   </property>
+  </action>
+  <action name="actionTileBoundaries">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/tileboard.png</normaloff>:/resources/tileboard.png</iconset>
+   </property>
+   <property name="text">
+    <string>Tile boundaries</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import</string>
+   </property>
+  </action>
+  <action name="actionHideTrackColumns">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/vhtcolumn.png</normaloff>:/resources/vhtcolumn.png</iconset>
+   </property>
+   <property name="text">
+    <string>Hide (show) track columns</string>
+   </property>
+  </action>
+  <action name="actionHideWptColumns">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/vhwcolumn.png</normaloff>:/resources/vhwcolumn.png</iconset>
+   </property>
+   <property name="text">
+    <string>Hide (show) waypoint columns</string>
+   </property>
+  </action>
+  <action name="actionTripReport">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/report.png</normaloff>:/resources/report.png</iconset>
+   </property>
+   <property name="text">
+    <string>Trip report</string>
+   </property>
+  </action>
+  <action name="actionAlignWptTpt">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/wpteqpnt.png</normaloff>:/resources/wpteqpnt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Align waypoint with trackpoint</string>
+   </property>
+  </action>
+  <action name="actionDepTime">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/wptdep.png</normaloff>:/resources/wptdep.png</iconset>
+   </property>
+   <property name="text">
+    <string>Departure time to waypoint</string>
+   </property>
+  </action>
+  <action name="actionArrTime">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/wptarr.png</normaloff>:/resources/wptarr.png</iconset>
+   </property>
+   <property name="text">
+    <string>Arrival time to waypoint</string>
+   </property>
+  </action>
+  <action name="actionLocalTimeGpx">
+   <property name="text">
+    <string>Local time for gpx</string>
+   </property>
+  </action>
+  <action name="actionDefaultGpxColWidth">
+   <property name="text">
+    <string>Default gpx columns width</string>
+   </property>
+  </action>
+  <action name="actionDefaultTrkColWidth">
+   <property name="text">
+    <string>Default track columns width</string>
+   </property>
+  </action>
+  <action name="actionDefaultWptColWidth">
+   <property name="text">
+    <string>Default waypoints columns width</string>
+   </property>
+  </action>
+  <action name="actionMeasure_">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/measure.png</normaloff>:/resources/measure.png</iconset>
+   </property>
+   <property name="text">
+    <string>Measure</string>
+   </property>
+  </action>
+  <action name="actionNextWaypoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/wptnext.png</normaloff>:/resources/wptnext.png</iconset>
+   </property>
+   <property name="text">
+    <string>Next waypoint</string>
+   </property>
+  </action>
+  <action name="actionPrevWaypoint">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/wptprev.png</normaloff>:/resources/wptprev.png</iconset>
+   </property>
+   <property name="text">
+    <string>Previos waypoint</string>
+   </property>
+  </action>
+  <action name="actionClearMeasure_">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/measclear.png</normaloff>:/resources/measclear.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clear measure</string>
+   </property>
+  </action>
+  <action name="actionMeasure">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/measure.png</normaloff>:/resources/measure.png</iconset>
+   </property>
+   <property name="text">
+    <string>Measure</string>
+   </property>
+  </action>
+  <action name="actionClearMeasure">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/measclear.png</normaloff>:/resources/measclear.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clear measure</string>
+   </property>
+  </action>
+  <action name="actionTownWeather">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/weather.png</normaloff>:/resources/weather.png</iconset>
+   </property>
+   <property name="text">
+    <string>Weather in town</string>
+   </property>
+  </action>
+  <action name="actionCreateGpx">
+   <property name="icon">
+    <iconset resource="gpxonmap.qrc">
+     <normaloff>:/resources/creategpx.png</normaloff>:/resources/creategpx.png</iconset>
+   </property>
+   <property name="text">
+    <string>Create gpx</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="gpxonmap.qrc"/>
+ </resources>
+ <connections/>
+</ui>
