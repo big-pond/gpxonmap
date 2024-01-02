@@ -326,6 +326,14 @@ void GpxReader::readWptElement()
                 readNameElement();
             else if (reader->name() == DESC)
                 readWptDescElement();
+            else if (reader->name() == CMT)
+                readWptCmtElement();
+            else if (reader->name() == SRC)
+                readWptSrcElement();
+            else if (reader->name() == SYM)
+                readWptSymElement();
+            else if (reader->name() == TYPE)
+                readWptTypeElement();
             else
                 skipUnknownElement();
         }
@@ -335,6 +343,10 @@ void GpxReader::readWptElement()
     WayPoint wpt(lat, lon, alt, time);
     if (!name.isEmpty()) wpt.setName(name);
     if (!desc.isEmpty()) wpt.setDesc(desc);
+    if (!cmt.isEmpty()) wpt.setCmt(cmt);
+    if (!src.isEmpty()) wpt.setSrc(src);
+    if (!sym.isEmpty()) wpt.setSym(sym);
+    if (!type.isEmpty()) wpt.setType(type);
     wpt.setMarking(marking);
     if(fuel!=0) wpt.setFuel(fuel);
     if(!namepos.isEmpty()) WptMrk::setNamePos(&wpt, namepos);
@@ -346,6 +358,10 @@ void GpxReader::readWptElement()
     marking.clear();
     fuel = 0;
     desc.clear();
+    cmt.clear();
+    src.clear();
+    sym.clear();
+    type.clear();
     namepos.clear();
     control = false;
     arr = QDateTime();
@@ -356,6 +372,34 @@ void GpxReader::readWptDescElement()
 {
     desc = reader->readElementText();
     parsingDesc();
+    if (reader->isEndElement())
+        reader->readNext();
+}
+
+void GpxReader::readWptCmtElement()
+{
+    cmt = reader->readElementText();
+    if (reader->isEndElement())
+        reader->readNext();
+}
+
+void GpxReader::readWptSrcElement()
+{
+    src = reader->readElementText();
+    if (reader->isEndElement())
+        reader->readNext();
+}
+
+void GpxReader::readWptSymElement()
+{
+    sym = reader->readElementText();
+    if (reader->isEndElement())
+        reader->readNext();
+}
+
+void GpxReader::readWptTypeElement()
+{
+    type = reader->readElementText();
     if (reader->isEndElement())
         reader->readNext();
 }

@@ -240,7 +240,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusbar->addWidget(ui->lbCoord);
     ui->statusbar->addWidget(ui->lbScale);
 
-    windowMapper = new QSignalMapper(this);
+//    windowMapper = new QSignalMapper(this);
 //    connect(windowMapper, SIGNAL(mappedObject(QObject*)), ui->mdiArea, SLOT(setActiveSubWindow(QMdiSubWindow*)));
 
     readSettings();
