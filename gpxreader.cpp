@@ -21,8 +21,9 @@ const QLatin1String GpxReader::MAXLON = QLatin1String("maxlon");
 const QLatin1String GpxReader::NAME   = QLatin1String("name");
 const QLatin1String GpxReader::EXTENSIONS = QLatin1String("extensions");
 const QLatin1String GpxReader::TRKSEG     = QLatin1String("trkseg");
-const QLatin1String GpxReader::TRACKEXTENSION = QLatin1String("gpxx:TrackExtension");
-const QLatin1String GpxReader::DISPLAYCOLOR = QLatin1String("gpxx:DisplayColor");
+const QLatin1String GpxReader::GPXX = QLatin1String("gpxx");
+const QLatin1String GpxReader::TRACKEXTENSION = QLatin1String("TrackExtension");
+const QLatin1String GpxReader::DISPLAYCOLOR = QLatin1String("DisplayColor");
 const QLatin1String GpxReader::TRKPT = QLatin1String("trkpt");
 const QLatin1String GpxReader::LAT   = QLatin1String("lat");
 const QLatin1String GpxReader::LON   = QLatin1String("lon");
@@ -194,10 +195,14 @@ void GpxReader::readExtensionsElement()
         }
         if (reader->isStartElement())
         {
-            if (reader->name() == TRACKEXTENSION)
+            if ((reader->prefix() == GPXX) && (reader->name() == TRACKEXTENSION))
+            {
                 readGpxxTrackExtensionElement();
+            }
             else
+            {
                 skipUnknownElement();
+            }
         }
         else
             reader->readNext();
@@ -216,7 +221,7 @@ void GpxReader::readGpxxTrackExtensionElement()
         }
         if (reader->isStartElement())
         {
-            if (reader->name() == DISPLAYCOLOR)
+            if ((reader->prefix() == GPXX) && (reader->name() == DISPLAYCOLOR))
                 readGpxxDisplayColorElement();
             else
                 skipUnknownElement();
@@ -493,35 +498,37 @@ void GpxReader::writeGPX(QIODevice* dev, Gpx* t)
     writer->setAutoFormatting(true);
     writer->writeStartDocument();
 
-    writer->writeStartElement("gpx");
+    writer->writeStartElement(GPX);
     writer->writeAttribute("xmlns", "http://www.topografix.com/GPX/1/0");
     writer->writeAttribute("xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
     writer->writeAttribute("version", "1.0");
     writer->writeAttribute("creator", "gpxonmap");
-    writer->writeStartElement("metadata");
-        writer->writeStartElement("bounds");
-        writer->writeAttribute("minlat", QString::number(gpx->getMinLat(),'f',8));
-        writer->writeAttribute("minlon", QString::number(gpx->getMinLon(),'f',8));
-        writer->writeAttribute("maxlat", QString::number(gpx->getMaxLat(),'f',8));
-        writer->writeAttribute("maxlon", QString::number(gpx->getMaxLon(),'f',8));
+    writer->writeStartElement(METADATA);
+        writer->writeStartElement(BOUNDS);
+        writer->writeAttribute(MINLAT, QString::number(gpx->getMinLat(),'f',8));
+        writer->writeAttribute(MINLON, QString::number(gpx->getMinLon(),'f',8));
+        writer->writeAttribute(MAXLAT, QString::number(gpx->getMaxLat(),'f',8));
+        writer->writeAttribute(MAXLON, QString::number(gpx->getMaxLon(),'f',8));
         writer->writeEndElement();
     writer->writeEndElement();
-    writer->writeStartElement("trk");
-        writer->writeTextElement("name", gpx->getName());
-        writer->writeStartElement("extensions");
-            writer->writeStartElement("gpxx:TrackExtension");
-                writer->writeTextElement("gpxx:DisplayColor", gpx->getColor());
+    writer->writeStartElement(TRK);
+        writer->writeTextElement(NAME, gpx->getName());
+        writer->writeStartElement(EXTENSIONS);
+            //writer->writeStartElement("gpxx:TrackExtension");
+            writer->writeStartElement(QString("%1:%2").arg(GPXX).arg(TRACKEXTENSION));
+                //writer->writeTextElement("gpxx:DisplayColor", gpx->getColor());
+                writer->writeTextElement(QString("%1:%2").arg(GPXX).arg(DISPLAYCOLOR), gpx->getColor());
             writer->writeEndElement(); //gpxx:TrackExtension
         writer->writeEndElement(); //extensions
-        writer->writeStartElement("trkseg");
+        writer->writeStartElement(TRKSEG);
         for (int i = 0; i < gpx->tptCount(); ++i)
         {
             TrackPoint* p = gpx->trackPointAt(i);
-            writer->writeStartElement("trkpt");
-            writer->writeAttribute("lat", QString::number(p->latitude,'f',8));
-            writer->writeAttribute("lon", QString::number(p->longitude,'f',8));
-            writer->writeTextElement("ele", QString::number(p->altitude,'f',2));
-            writer->writeTextElement("time", p->time.toString(Qt::ISODate));
+            writer->writeStartElement(TRKPT);
+            writer->writeAttribute(LAT, QString::number(p->latitude,'f',8));
+            writer->writeAttribute(LON, QString::number(p->longitude,'f',8));
+            writer->writeTextElement(ELE, QString::number(p->altitude,'f',2));
+            writer->writeTextElement(TIME, p->time.toString(Qt::ISODate));
             writer->writeEndElement();//trkpt
         }
         writer->writeEndElement(); //trkseg
@@ -529,25 +536,25 @@ void GpxReader::writeGPX(QIODevice* dev, Gpx* t)
     for(int i=0; i<gpx->wptCount(); i++)
     {
         WayPoint* p = gpx->wayPointAt( i);
-        writer->writeStartElement("wpt");
-        writer->writeAttribute("lat", QString::number(p->latitude,'f',8));
-        writer->writeAttribute("lon", QString::number(p->longitude,'f',8));
-        writer->writeTextElement("ele", QString::number(p->altitude,'f',2));
-        writer->writeTextElement("time", p->time.toString(Qt::ISODate));
-        if(!p->name().isEmpty())writer->writeTextElement("name", p->name());
-        if(!p->cmt().isEmpty()) writer->writeTextElement("cmt", p->cmt());
-        if(!p->src().isEmpty()) writer->writeTextElement("src", p->src());
-        if(!p->sym().isEmpty()) writer->writeTextElement("sym", p->sym());
-        if(!p->type().isEmpty())writer->writeTextElement("type", p->type());
+        writer->writeStartElement(WPT);
+        writer->writeAttribute(LAT, QString::number(p->latitude,'f',8));
+        writer->writeAttribute(LON, QString::number(p->longitude,'f',8));
+        writer->writeTextElement(ELE, QString::number(p->altitude,'f',2));
+        writer->writeTextElement(TIME, p->time.toString(Qt::ISODate));
+        if(!p->name().isEmpty())writer->writeTextElement(NAME, p->name());
+        if(!p->cmt().isEmpty()) writer->writeTextElement(CMT, p->cmt());
+        if(!p->src().isEmpty()) writer->writeTextElement(SRC, p->src());
+        if(!p->sym().isEmpty()) writer->writeTextElement(SYM, p->sym());
+        if(!p->type().isEmpty())writer->writeTextElement(TYPE, p->type());
         if(p->isMarking())
         {
             makeDesc(p); //формируем пременную desc
-            writer->writeTextElement("desc", desc);
+            writer->writeTextElement(DESC, desc);
         }
         else
         {
             if(!p->desc().isEmpty())
-                writer->writeTextElement("desc", p->desc());
+                writer->writeTextElement(DESC, p->desc());
         }
         writer->writeEndElement();//wpt
     }

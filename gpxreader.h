@@ -30,6 +30,7 @@ public:
     static const QLatin1String NAME;
     static const QLatin1String EXTENSIONS;
     static const QLatin1String TRKSEG;
+    static const QLatin1String GPXX;
     static const QLatin1String TRACKEXTENSION;
     static const QLatin1String DISPLAYCOLOR;
     static const QLatin1String TRKPT;
